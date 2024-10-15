@@ -13,5 +13,12 @@ jobs:
               run: |
                  for branch in $(git branch -r); do
                      echo "Branch: $branch"
+                     git checkout $branch #checkout each branches
+                     check_commit=$(git log --since="14 days ago" --oneline)
+                     if [ -z "$check_commit" ]; then
+                         echo "No commit history in last 14 days"
+                     else
+                         echo "Commits are present move to next branch"
+                     fi
                  done
             
