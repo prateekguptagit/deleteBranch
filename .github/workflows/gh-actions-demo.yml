@@ -35,7 +35,7 @@ jobs:
                              echo "Open pull request is present for the $branch. Skip deletion"
                          fi
                      else
-                         echo "Commits are present for $branch. Skip Deletion
+                         echo "Commits are present for $branch. Skip Deletion"
                      fi
                  done
             
