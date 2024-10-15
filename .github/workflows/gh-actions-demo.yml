@@ -1,8 +1,8 @@
-name: Github Actions Demo
+name: Delete Stale Branches
 on: workflow_dispatch
 
 jobs:
-    test-job:
+    delete-branch:
         runs-on: ubuntu-latest
         steps: 
             - name: checkout code
@@ -14,23 +14,28 @@ jobs:
               run:
                   sudo apt-get install -y gh
                   
-            - name: Get list of branches
+            - name: delete stale branches
               env:
                   GH_TOKEN: ${{ github.token }}
               run: |
-                 for branch in $(git branch -r); do
-                     echo "Branch: $branch"
-                     git checkout $branch #checkout each branches
+                 for branch in $(git branch -r | grep -v '\->'); do
+                     echo "Checkout to branch: $branch"
+                     git checkout $branch
                      check_commit=$(git log --since="14 days ago" --oneline)
                      if [ -z "$check_commit" ]; then
-                         echo "No commit history in last 14 days"
+                         echo "No commit history present from last 14 days"
                          
-                     else
-                         echo "Commits are present move to next branch"
                          open_pr=$(gh pr list --head $branch --state open)
                          if [ -z "$open_pr" ]; then
-                             echo "No Open pull request for the branch"
+                             echo "No Open pull request for the $branch"
+                             echo "Deleting the $branch"
+                             git push origin --delete $branch
+                             echo "Branch is deleted successfully"
+                         else
+                             echo "Open pull request is present for the $branch. Skip deletion"
                          fi
+                     else
+                         echo "Commits are present for $branch. Skip Deletion
                      fi
                  done
             
