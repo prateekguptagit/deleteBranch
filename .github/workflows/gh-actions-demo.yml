@@ -5,6 +5,8 @@ jobs:
     test-job:
         runs-on: ubuntu-latest
         steps: 
+            - name: checkout code
+              uses: actions/checkout@v4
             - name: Get list of branches
               run: |
                  git branch
