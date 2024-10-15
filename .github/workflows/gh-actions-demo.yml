@@ -11,8 +11,7 @@ jobs:
                   fetch-depth: 0
             - name: Get list of branches
               run: |
-                 branch_list=$(git branch -r)
-                 for branch in $(branch_list); do
+                 for branch in $(git branch -r); do
                      echo "Branch: $branch"
                  done
             
