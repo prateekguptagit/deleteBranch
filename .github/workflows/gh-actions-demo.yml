@@ -31,6 +31,7 @@ jobs:
                              echo "Deleting the $branch"
                              git push origin --delete $branch
                              echo "Branch is deleted successfully"
+                             
                          else
                              echo "Open pull request is present for the $branch. Skip deletion"
                          fi
