@@ -25,6 +25,10 @@ jobs:
                          
                      else
                          echo "Commits are present move to next branch"
+                         open_pr=$(gh pr list --head $branch --state open)
+                         if [ -z "$open_pr" ]; then
+                             echo "No Open pull request for the branch"
+                         fi
                      fi
                  done
             
