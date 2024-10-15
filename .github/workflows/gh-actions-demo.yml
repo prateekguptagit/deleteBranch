@@ -21,6 +21,12 @@ jobs:
                  for branch in $(git branch -r | grep -v '\->'); do
                      echo "Checkout to branch: $branch"
                      git checkout $branch
+
+                     if [ "$branch" == "main" ]; then
+                         echo "Skip deletion of main branch"
+                         continue
+                     fi
+                     
                      check_commit=$(git log --since="14 days ago" --oneline)
                      if [ -z "$check_commit" ]; then
                          echo "No commit history present from last 14 days"
