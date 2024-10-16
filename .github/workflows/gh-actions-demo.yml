@@ -14,7 +14,7 @@ jobs:
                   fetch-depth: 0
                   
             - name: Print all environment variables
-              run: env | sort
+              run: echo "${{ vars.IGNORE_BRANCHES_DELETE }}"
               
             - name: delete stale branches
               env:
