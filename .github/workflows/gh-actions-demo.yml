@@ -1,5 +1,8 @@
 name: Delete Stale Branches
-on: workflow_dispatch
+on:
+    push:
+        branches:
+            - 'main'
 
 jobs:
     delete-branch:
@@ -9,10 +12,6 @@ jobs:
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
-
-            - name: Install gh cli
-              run:
-                  sudo apt-get install -y gh
                   
             - name: delete stale branches
               env:
@@ -22,6 +21,7 @@ jobs:
                      echo "Checkout to branch: $branch"
                      git checkout $branch
 
+                     echo "Get the value of environment and repository variables"
                      if [ "$branch" == "main" ]; then
                          echo "Skip deletion of main branch"
                          continue
