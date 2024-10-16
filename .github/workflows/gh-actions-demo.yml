@@ -19,13 +19,13 @@ jobs:
               run: |
                  IGNORE_BRANCHES=${{ vars.IGNORE_BRANCHES_DELETE }}
                  ignore_branch=($(echo "$IGNORE_BRANCHES" | tr ',' '\n'))
-                 echo "$ignore_branch"
+                 
+                 #IFS=',' read -r -a ignore_branches <<< "$IGNORE_BRANCHES"
                  
                  for branch in $(git branch -r | grep -v '\->'); do
                      echo "Checking branch: $branch"
 
-                     echo "${ignore_branch[@]}"
-                     if [ "${ignore_branch[@]}" == "${branch}" ]; then
+                     if [ "${ignore_branch[@]}" =~ "${branch}" ]; then
                          echo "skip deletion of branch $branch"
                          continue
                      fi
