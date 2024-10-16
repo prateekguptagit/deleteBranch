@@ -24,9 +24,10 @@ jobs:
                      echo "Checkout to branch: $branch"
                      git checkout $branch
 
-                     ignore_branch=${{ vars.IGNORE_BRANCHES_DELETE }}
-                     for branch in $ignore_branch; do
-                         echo "Skip deletion of branch $branch"
+                     IGNORE_BRANCHES=${{ vars.IGNORE_BRANCHES_DELETE }}
+                     ignore_branch=($(echo "$IGNORE_BRANCHES" | tr ',' '\n'))
+                     for branch in "${ignore_branch[@]}"; do
+                         echo "Ignore Branch: $branch"
                      done
                      
                      #if [ "$branch" == "main" ]; then
