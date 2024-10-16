@@ -25,10 +25,17 @@ jobs:
                  for branch in $(git branch -r | grep -v '\->'); do
                      echo "Checking branch: $branch"
 
-                     if [ " ${ignore_branches[@]} " =~ " ${branch} " ]; then
-                         echo "skip deletion of branch $branch"
-                         continue
-                     fi
+                     #if [ " ${ignore_branches[@]} " =~ " ${branch} " ]; then
+                      #   echo "skip deletion of branch $branch"
+                       #  continue
+                     #fi
+
+                     for a in "${ignore_branches[@]}"; do
+                         if [ "$a" == "$branch" ]; then
+                             echo "The branch is in ignore list, skip deletion"
+                             continue
+                         fi
+                     done
                      
                      git checkout $branch
                      
