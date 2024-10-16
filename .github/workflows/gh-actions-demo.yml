@@ -18,14 +18,14 @@ jobs:
                   GH_TOKEN: ${{ github.token }}
               run: |
                  IGNORE_BRANCHES=${{ vars.IGNORE_BRANCHES_DELETE }}
-                 ignore_branch=($(echo "$IGNORE_BRANCHES" | tr ',' '\n'))
+                 #ignore_branch=($(echo "$IGNORE_BRANCHES" | tr ',' '\n'))
                  
-                 #IFS=',' read -r -a ignore_branches <<< "$IGNORE_BRANCHES"
+                 IFS=',' read -r -a ignore_branches <<< "$IGNORE_BRANCHES"
                  
                  for branch in $(git branch -r | grep -v '\->'); do
                      echo "Checking branch: $branch"
 
-                     if [ "${ignore_branch[@]}" =~ "${branch}" ]; then
+                     if [ " ${ignore_branches[@]} " =~ " ${branch} " ]; then
                          echo "skip deletion of branch $branch"
                          continue
                      fi
