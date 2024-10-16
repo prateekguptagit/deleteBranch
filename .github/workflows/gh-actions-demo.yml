@@ -13,6 +13,9 @@ jobs:
               with:
                   fetch-depth: 0
                   
+            - name: Print all environment variables
+              run: env | sort
+              
             - name: delete stale branches
               env:
                   GH_TOKEN: ${{ github.token }}
@@ -21,7 +24,6 @@ jobs:
                      echo "Checkout to branch: $branch"
                      git checkout $branch
 
-                     echo "Get the value of environment and repository variables"
                      if [ "$branch" == "main" ]; then
                          echo "Skip deletion of main branch"
                          continue
