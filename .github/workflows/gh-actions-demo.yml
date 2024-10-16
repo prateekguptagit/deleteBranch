@@ -25,7 +25,7 @@ jobs:
                      git checkout $branch
 
                      ignore_branch=${{ vars.IGNORE_BRANCHES_DELETE }}
-                     for $branch in $ignore_branch; do
+                     for branch in $ignore_branch; do
                          echo "Skip deletion of branch $branch"
                      done
                      
