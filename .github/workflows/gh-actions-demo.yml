@@ -12,28 +12,23 @@ jobs:
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
-                  
-            - name: Print all environment variables
-              run: echo "${{ vars.IGNORE_BRANCHES_DELETE }}"
               
             - name: delete stale branches
               env:
                   GH_TOKEN: ${{ github.token }}
               run: |
+                 IGNORE_BRANCHES=${{ vars.IGNORE_BRANCHES_DELETE }}
+                 ignore_branch=($(echo "$IGNORE_BRANCHES" | tr ',' '\n'))
+                 
                  for branch in $(git branch -r | grep -v '\->'); do
-                     echo "Checkout to branch: $branch"
-                     git checkout $branch
-
-                     IGNORE_BRANCHES=${{ vars.IGNORE_BRANCHES_DELETE }}
-                     ignore_branch=($(echo "$IGNORE_BRANCHES" | tr ',' '\n'))
-                     for branch in "${ignore_branch[@]}"; do
-                         echo "Ignore Branch: $branch"
-                     done
+                     echo "Checking branch: $branch"
                      
-                     #if [ "$branch" == "main" ]; then
-                      #   echo "Skip deletion of main branch"
-                       #  continue
-                     #fi
+                     if [ "${ignore_branch[@]}" == "${branch}" ]; then
+                         echo "skip deletion of branch $branch"
+                         continue
+                     fi
+                     
+                     git checkout $branch
                      
                      check_commit=$(git log --since="14 days ago" --oneline)
                      if [ -z "$check_commit" ]; then
