@@ -27,7 +27,7 @@ jobs:
 
 
                      for a in "${ignore_branches[@]}"; do
-                         if [ "$a" == "$branch" ]; then
+                         if [ "$a" =~ "$branch" ]; then
                              echo "The branch is in ignore list, skip deletion"
                              continue
                          fi
