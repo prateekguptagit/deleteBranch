@@ -33,6 +33,10 @@ jobs:
                              break
                          fi
                      done
+
+                     if [ "$branch_ignore" == true ]; then
+                       continue
+                     fi
                      
                      git checkout $branch
                      
