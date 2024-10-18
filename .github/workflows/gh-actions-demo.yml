@@ -22,7 +22,7 @@ jobs:
                  
                  IFS=',' read -r -a ignore_branches <<< "$IGNORE_BRANCHES"
                  
-                 for branch in $(git branch -r | grep -v '\->' | sed 's@origin\/@@'); do
+                 for branch in $(git branch -r | grep -v '\->' | sed 's/origin\///'); do
                      echo "Checking branch: $branch"
 
 
