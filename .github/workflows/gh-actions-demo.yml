@@ -1,7 +1,8 @@
 name: Delete Stale Branches
 on: 
-  schedule:
-    - cron: '0 9 * * 0'
+  push:
+    branches:
+      - 'main'
 
 jobs:
   delete-branch:
