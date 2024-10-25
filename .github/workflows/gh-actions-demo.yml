@@ -19,14 +19,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           IGNORE_BRANCHES=${{ vars.IGNORE_BRANCHES_DELETE }}
-          DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
+          
             
           IFS=',' read -r -a ignore_branches <<< "$IGNORE_BRANCHES"
             
           for branch in $(git branch -r | grep -v '\->' | sed 's/origin\///'); do
             echo "Checking branch: $branch"
             
-            if [ "$branch" == "$DEFAULT_BRANCH" ]; then
+            if [ "$branch" == "main" ]; then
               echo "Branch $branch is the default branch, skip deletion"
               continue
             fi
