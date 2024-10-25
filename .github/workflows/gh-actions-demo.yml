@@ -55,7 +55,7 @@ jobs:
               if [ -z "$open_pr" ]; then
                 echo "No Open pull request for the $branch"
                 echo "Deleting the $branch"
-                git push origin --delete $branch
+                #git push origin --delete $branch
                 echo "Branch is deleted successfully"
                              
               else
